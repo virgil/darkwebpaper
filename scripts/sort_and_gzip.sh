@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cd tmp
+cd merged
 
 # remove any old gzip files
 # rm *.gzip
