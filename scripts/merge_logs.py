@@ -62,7 +62,7 @@ def make_dict_of_dates_to_logs():
     all_days = sorted(list(set([ fname2day(x) for x in all_files ])))
 
     # remove the final day because we're not sure if it's done yet
-    all_days.pop()
+    #all_days.pop()
 
     print( "days to process: %s" % all_days )
 
@@ -71,9 +71,13 @@ def make_dict_of_dates_to_logs():
 
     for this_file in all_files:
         this_day = fname2day(this_file)
+        z[this_day].append( this_file )
 
-        if this_day in all_days:
-            z[this_day].append( this_file )
+
+    # if the final day has last than 18 entries (implying it's not done yet, pop it).
+    last_day = all_days[-1]
+    if len(z[last_day]) < 18:
+        del z[last_day]
 
     return z 
 
