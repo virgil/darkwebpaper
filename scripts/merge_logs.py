@@ -146,12 +146,6 @@ def make_dict_of_dates_to_logs():
         this_day = fname2day(this_file)
         z[this_day].append( this_file )
 
-
-    # if the final day has last than 18 entries (implying it's not done yet, pop it).
-    last_day = all_days[-1]
-    if len(z[last_day]) < 18:
-        del z[last_day]
-
     return z 
 
 
