@@ -8,8 +8,8 @@ from pprint import pprint
 import os.path
 
 ###########################################################################################
-#INCOMING_DIRECTORY  = '2015-05m/'
-INCOMING_DIRECTORY  = 'incoming/'
+INCOMING_DIRECTORY  = '2015-05m/'
+#INCOMING_DIRECTORY  = 'incoming/'
 MERGED_DIRECTORY = 'merged/'
 MINIMUM_NUMBER_OF_LOGFILES = 10
 ###########################################################################################
@@ -30,6 +30,50 @@ def get_parsing_pattern( filename ):
 
         return re.compile(r'^[^{]*')
 
+def oldstyle2json(line):
+    '''takes in the oldstyle log that's double-space delimited and returns json.'''
+
+    month2digit={'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12' }
+
+# { 'time': '2015-07-29 09:40:38', 'cc': 'AT', 'cache': 'HIT', 'host': 'kaufmichob4rdqje', 'status': '200', 'path': '/pictures/alessandra1510/alessandra1510-JnhwGTwpu0v-thumb.jpg' }
+    if not '  ' in line:
+        return line
+
+    line_values = line.split('  ')
+    assert len(line_values) == 7, "Found more than 7 entries in line=%s.  Unsure what to do." % line
+    line_keys = ['ip','cache','time','host','size','status','path']
+
+    pdict = dict( zip(line_keys, line_values) )
+
+
+    ### now scrub up the various entries
+
+    # scrub the host
+    if pdict['host'].endswith('.onion.city'):
+        pdict['host'] = (pdict['host'])[:-len('.onion.city')]
+
+    # scrub the cache
+    if pdict['cache'].endswith('-CLUSTER'):
+        pdict['cache'] = (pdict['cache'])[:-len('-CLUSTER')]
+
+    # if there's no size, remove it
+    if pdict['size'] == '(null)':
+        del pdict['size']
+
+    # scrub the HTTP METHOD from the path
+    if ' ' in pdict['path'] and pdict['path'].split(' ', 1)[0] in ['GET','HEAD','POST','PUT','TRACE','DELETE']:
+        pdict['path'] = pdict['path'].split(' ', 1)[1]
+
+    # scrub the timestamp
+    timelist = pdict['time'].split(' ')
+    timedict = { 'day': timelist[1], 'month': month2digit[timelist[2]], 'year': timelist[3], 'time': timelist[4] }
+    pdict['time']="%(year)s-%(month)s-%(day)s %(time)s" % timedict
+
+
+    z = [ '"%s": "%s"' % (x, pdict[x]) for x in ['time', 'cache', 'host', 'status', 'size', 'path', 'ip'] if x in pdict ]
+    z = '{ ' + ', '.join(z) + ' }'
+
+    return z
 
 ###########################################################################################
 #from os.path import isfile, join
@@ -60,6 +104,10 @@ def process_log_files( input_filenames, output_filename ):
                 # if this is a JSON file with the single-quote problem, fix that now.
                 if "'time':" in newline:
                     newline = re.sub(PATTERN_SINGLEQUOTE_TO_DOUBLEQUOTE_JSON, r'"\1"', newline).strip()
+
+                # if this isn't a JSON line, convert it from the double-space version to JSON.
+                if not newline.startswith('{'):
+                    newline = oldstyle2json(newline).strip()
 
                 output.write( newline )
                 output.write('\n')
@@ -111,15 +159,20 @@ if __name__ == '__main__':
 
     dicty = make_dict_of_dates_to_logs()
 
-    for date in sorted(dicty):
+    # remove any entries without enough entries from the dicty
+    for date in sorted(dicty.keys()):
 
         input_logfiles = dicty[date]
 
         # if there's too log files, skip it.
         if len(input_logfiles) < MINIMUM_NUMBER_OF_LOGFILES:
             print("* Warning: Only %d logfiles for %s.  Skipping." % (len(input_logfiles), date) )
-            continue
+            del dicty[date]
+            
 
+    for date in sorted(dicty):
+
+        input_logfiles = dicty[date]
 
         ofilename = "%s/%s.log" % ( MERGED_DIRECTORY, date ) 
         abs_ofilename = os.path.abspath(ofilename)
