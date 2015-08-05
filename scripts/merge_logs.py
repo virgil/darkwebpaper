@@ -1,5 +1,6 @@
-#!/usr/local/bin/python3.3
+#!/usr/bin/env python3.3
 # -*- coding: utf-8 -*-
+
 import re, sys
 from os import listdir
 from os.path import isfile
@@ -7,10 +8,28 @@ from pprint import pprint
 import os.path
 
 ###########################################################################################
+#INCOMING_DIRECTORY  = '2015-05m/'
 INCOMING_DIRECTORY  = 'incoming/'
-PROCESSED_DIRECTORY = 'processed/'
-TEMP_DIRECTORY = 'tmp/'
+MERGED_DIRECTORY = 'merged/'
+MINIMUM_NUMBER_OF_LOGFILES = 10
 ###########################################################################################
+
+PATTERN_SINGLEQUOTE_TO_DOUBLEQUOTE_JSON = re.compile(r"'([^']*)'(?=[:, ])")
+
+def get_parsing_pattern( filename ):
+    '''takes the firstline of a file and returns the appropriate regex-pattern for removing the Fastly crud'''
+
+    assert isfile( filename ), "%s was not a file" % filename
+
+    with open(filename, 'r', encoding='utf-8', errors='ignore') as f:
+
+        line = f.readline()
+
+        if not '{' in line and ']:' in line:
+            return re.compile(r'^.*]:')
+
+        return re.compile(r'^[^{]*')
+
 
 ###########################################################################################
 #from os.path import isfile, join
@@ -18,8 +37,7 @@ TEMP_DIRECTORY = 'tmp/'
 def process_log_files( input_filenames, output_filename ):
     '''returns the output filename'''
 
-    # remove everything before the first '{'
-    pattern = re.compile(r'^[^{]*')
+# old style.  Remove everything before the ']:', else, before the first '{'
 
     output = open( output_filename, 'w', encoding='utf-8' )
 
@@ -30,11 +48,18 @@ def process_log_files( input_filenames, output_filename ):
             print("File: '%s' does not exist. Skipping." % filename, file=sys.stderr)
             continue
 
+        pattern = get_parsing_pattern( filename )
+
         with open(filename,'r', encoding='utf-8', errors='ignore') as f:
+
             for line in f:
 
                 # remove everything before the first '::'.  Then remove any whitespace.
                 newline = re.sub(pattern, '', line, count=1).strip()
+
+                # if this is a JSON file with the single-quote problem, fix that now.
+                if "'time':" in newline:
+                    newline = re.sub(PATTERN_SINGLEQUOTE_TO_DOUBLEQUOTE_JSON, r'"\1"', newline).strip()
 
                 output.write( newline )
                 output.write('\n')
@@ -87,8 +112,16 @@ if __name__ == '__main__':
     dicty = make_dict_of_dates_to_logs()
 
     for date in sorted(dicty):
+
         input_logfiles = dicty[date]
-        ofilename = "%s/%s.log" % ( TEMP_DIRECTORY, date ) 
+
+        # if there's too log files, skip it.
+        if len(input_logfiles) < MINIMUM_NUMBER_OF_LOGFILES:
+            print("* Warning: Only %d logfiles for %s.  Skipping." % (len(input_logfiles), date) )
+            continue
+
+
+        ofilename = "%s/%s.log" % ( MERGED_DIRECTORY, date ) 
         abs_ofilename = os.path.abspath(ofilename)
 
         #print( "Doing %s..." % date)
