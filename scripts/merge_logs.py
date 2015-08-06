@@ -46,7 +46,7 @@ def oldstyle2json(line):
         print('x'),
         return ''
 
-    line_keys = ['ip','cache','time','host','size','status','path']
+    line_keys = ['ip','cache','time','h','size','status','path']
 
     pdict = dict( zip(line_keys, line_values) )
 
@@ -75,7 +75,7 @@ def oldstyle2json(line):
     pdict['time']="%(year)s-%(month)s-%(day)s %(time)s" % timedict
 
 
-    z = [ '"%s": "%s"' % (x, pdict[x]) for x in ['time', 'cache', 'host', 'status', 'size', 'path', 'ip'] if x in pdict ]
+    z = [ '"%s": "%s"' % (x, pdict[x]) for x in ['time', 'cache', 'h', 'status', 'size', 'path', 'ip'] if x in pdict ]
     z = '{ ' + ', '.join(z) + ' }'
 
     return z
@@ -113,6 +113,10 @@ def process_log_files( input_filenames, output_filename ):
                 # if this isn't a JSON line, convert it from the double-space version to JSON.
                 if not newline.startswith('{'):
                     newline = oldstyle2json(newline).strip()
+
+                # if this file has the "host": key in it, rewrite it to "h":
+                if '"host":' in newline:
+                    newline = newline.replace('"host":','"h":', 1)
 
                 output.write( newline )
                 output.write('\n')
