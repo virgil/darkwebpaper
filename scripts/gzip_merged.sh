@@ -1,20 +1,18 @@
 #!/bin/sh
 
-cd merged
 
-# remove any old gzip files
-# rm *.gzip
+if [ ! -d "$1" ]; then
+	echo "You must specify a directory."
+	echo "E.g. ./gzip_merged.sh merged/"
+	exit
+	fi
 
-for x in `ls *.log`
+# strip any slash from dir
+dir=${1%/}
+
+for x in ${dir}/*.log
 do
-#	echo "sorting  $x..."
-#	time sort "$x" > "${x%%.*}s.log"
-
-#	# remove the old unsorted copy
-#	rm "$x"
-
 	# the -f is to overwrite any pre-existing filename
-	echo "gzipping ${x}...\n"
+	echo "gzipping ${x}..."
 	time gzip -f "$x"
-	mv "${x}.gz" ../processed/
 done

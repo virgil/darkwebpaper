@@ -40,7 +40,12 @@ def oldstyle2json(line):
         return line
 
     line_values = line.split('  ')
-    assert len(line_values) == 7, "Found more than 7 entries in line=%s.  Unsure what to do." % line
+
+
+    if len(line_values) != 7:
+        print('x'),
+        return ''
+
     line_keys = ['ip','cache','time','host','size','status','path']
 
     pdict = dict( zip(line_keys, line_values) )
@@ -137,7 +142,7 @@ def make_dict_of_dates_to_logs():
     # remove the final day because we're not sure if it's done yet
     #all_days.pop()
 
-    print( "days to process: %s" % all_days )
+    print( "days to process: %s" % ' '.join(all_days) )
 
     # make a dictionary of all of the logfiles for each day
     z = { x:[] for x in all_days }
@@ -175,7 +180,8 @@ if __name__ == '__main__':
         #print( "ofile=%s" % abs_ofilename )
         #print( "inputs=%s" % logfiles )
 
+        print( "- Merging %d file(s) \t -> %s" % (len(input_logfiles), abs_ofilename) )
         process_log_files( input_logfiles, abs_ofilename )
-        print( "- Merged %d file(s) \t -> %s" % (len(input_logfiles), abs_ofilename) )
+        
 
 
