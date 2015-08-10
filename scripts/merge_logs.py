@@ -54,8 +54,8 @@ def oldstyle2json(line):
     ### now scrub up the various entries
 
     # scrub the host
-    if pdict['host'].endswith('.onion.city'):
-        pdict['host'] = (pdict['host'])[:-len('.onion.city')]
+    if pdict['h'].endswith('.onion.city'):
+        pdict['h'] = (pdict['h'])[:-len('.onion.city')]
 
     # scrub the cache
     if pdict['cache'].endswith('-CLUSTER'):
