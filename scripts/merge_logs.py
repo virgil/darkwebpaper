@@ -8,8 +8,8 @@ from pprint import pprint
 import os.path
 
 ###########################################################################################
-INCOMING_DIRECTORY  = '2015-05m/'
-#INCOMING_DIRECTORY  = 'incoming/'
+#INCOMING_DIRECTORY  = '2015-05m/'
+INCOMING_DIRECTORY  = 'incoming/'
 MERGED_DIRECTORY = 'merged/'
 MINIMUM_NUMBER_OF_LOGFILES = 10
 ###########################################################################################

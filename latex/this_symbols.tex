@@ -1,0 +1,151 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Misc style stuff
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% make in NIPS format
+\usepackage{nips10submit_e}
+\nipsfinalcopy
+
+\definecolor{mygray}{RGB}{153,153,153}
+\definecolor{myred}{RGB}{221,77,57}
+\definecolor{myblue}{RGB}{68,104,252}
+\definecolor{mygreen}{RGB}{86,149,22}
+
+
+% \raisebox{distance}[extend-above][extend-below]{text}
+\newcommand*{\rsquare}{ \textcolor{myred}{\rule{0.14in}{0.14in}} }
+\newcommand*{\graysquare}{ \raisebox{-2pt}{\textcolor{mygray}{\rule{0.14in}{0.14in}}} }
+\newcommand*{\bsquare}{ \textcolor{myblue}{\rule{0.14in}{0.14in}} }
+\newcommand*{\gsquare}{ \raisebox{-2pt}{\textcolor{mygreen}{\rule{0.14in}{0.14in}}} }
+%\newcommand*{\ysquare}{ \textcolor{yellow}{\rule{0.1in}{0.1in}} }
+
+\newcommand*{\balpha}{\boldsymbol{\alpha}}
+\newcommand*{\bbeta}{\boldsymbol{\beta}}
+
+\newcommand*{\wsquare}{ \rule{0.1in}{0.1in} }
+
+%\newcommand*{\rsquare}{ \textcolor{red}{$\CIRCLE$} }
+%\newcommand*{\bsquare}{ \textcolor{blue}{$\CIRCLE$} }
+%\newcommand*{\ysquare}{ \textcolor{yellow}{$\CIRCLE$} }
+
+\newcommand*{\rcircle}{ \textcolor{red}{$\CIRCLE$}  \textcolor{black}{$\Circle$}  }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Commands only for this paper
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\newcommand*{\X}{\ensuremath{\mathcal{X}}\xspace}
+%\newcommand*{\x}{\ensuremath{\mathcal{x}}}
+
+\newcommand*{\X}{\ensuremath{X_{1 \ldots n}\xspace}}
+%\newcommand*{\x}{\ensuremath{x}\xspace}
+
+%\renewcommand*{\P}{\ensuremath{\mathcal{P}} }
+\renewcommand*{\P}{\ensuremath{\mathbf{P}}\xspace}
+\newcommand*{\A}{\ensuremath{\mathbf{\mathcal{A}}}}
+\newcommand*{\R}{\ensuremath{\textbf{R}} }
+
+%\newcommand*{\Psize}{\ensuremath{\mid\P\mid} }
+\newcommand*{\Psize}{\ensuremath{n}\xspace}
+%\newcommand*{\Psize}{\ensuremath{\eta} }
+
+\newcommand*{\perm}{\operatorname{\textsc{perm}}}
+\newcommand*{\holism}{\textnormal{\Pisces}\xspace}
+%\newcommand*{\holism}{\circledS\xspace}
+%\newcommand*{\holism}{ \ensuremath{\integ_{\!\mathcal{H}} } }
+%\newcommand*{\integ}{\!\!\textnormal{ {\Gemini}}}
+
+
+\newcommand*{\integ}{ \ensuremath{\Upsilon^{\textnormal{prf}}}\xspace}
+%\newcommand*{\integ}{ \ensuremath{\mathcal{CC}} }
+%\newcommand*{\integ}{ \ensuremath{\Gamma} }
+\newcommand*{\integir}{ \ensuremath{\Upsilon}\xspace}
+
+%\newcommand*{\integ}{ \raisebox{7pt}{\rotatebox{180}{\ensuremath{\Upsilon}}}}
+
+%\newcommand*{\integ}{ \raisebox{7pt}{\rotatebox{180}{ \Aries }} \! \! }
+%\newcommand*{\integ}{ \textnormal{\Gemini } }
+
+\newcommand*{\TSE}{\textnormal{\textsc{TSE-comp}}}
+
+% For when discussing the operators within the text.
+%\newcommand*{\XOR}{\ensuremath{\operatorname{XOR}}}
+%\newcommand*{\AND}{\ensuremath{\operatorname{AND}}}
+%\newcommand*{\GET}{\ensuremath{\operatorname{GET}}}
+
+
+%\newcommand*{\beiP}{\ensuremath{\langle {\ei}(\P)\rangle}}
+\newcommand*{\holismP}{ \ensuremath{ \holism \left( \P_0 : \X_1 \right) }\xspace}
+%\newcommand*{\integP}{ \ensuremath{ \integ_\P \left( X_1 \right) } }
+
+\newcommand*{\integP}{ \ensuremath{ \mathcal{CC}\left( \P_0 : \X_1 \right) }\xspace}
+
+%\newcommand*{\eiP}{\ensuremath{ {\ei}(\P) }}
+
+% define a format for printing BINARY numbers
+\newcommand*{\bin}[1]{\texttt{#1}}
+
+\newcommand*{\PI}{\ensuremath{\operatorname{I}_{\partial} }\!\xspace}
+%\newcommand*{\PI}{ \scalebox{1.15}{\ensuremath{ \operatorname{I}_{\partial} } } }
+
+%\newcommand*{\ei}{\ensuremath{{\tt ei}}\xspace}
+
+\newcommand*{\beiP}{ \ensuremath{ \ei \! \left( \X_0 \rightarrow \X_1 / \P \right) }\xspace}
+\newcommand*{\eiP}{ \ensuremath{ \ei \! \left( \X_1 / \P \right) }\xspace}
+%\newcommand*{\ei}[1]{ \ei \! \left( #1 \right) }
+
+\renewcommand*{\Imin}[2]{\operatorname{I}_{\min} \! \left( #1 \!:\! #2 \right)}
+
+\newcommand*{\WMS}{\operatorname{WMS}}
+\newcommand*{\minWMS}{\operatorname{WMMS}}
+\renewcommand*{\S}{\ensuremath{\mathcal{S}}\xspace}
+\renewcommand*{\R}{\ensuremath{\mathcal{R}}\xspace}
+
+\newcommand*{\U}{\ensuremath{\mathcal{U}}\xspace}
+
+\newcommand*{\setX}{\ensuremath{\mathbf{X}}\xspace}
+\newcommand*{\setx}{\ensuremath{\mathbf{x}}\xspace}
+
+% For the section on \Delta I
+%\newcommand*{\ind}{\textnormal{ind}}
+
+%\renewcommand*{\Sop}[2]{\operatornamewithlimits{\mathcal{S}}\left( #1 : #2 \right)}
+\newcommand*{\ei}{\ensuremath{{\tt ei}}\xspace}
+\renewcommand*{\=}{ \ensuremath{ \! = \!}}
+
+\renewcommand*{\flat}[1]{\ensuremath{\overline{#1}}}
+
+
+\newcommand*{\unq}[1]{\ensuremath{\opname{unq} \! \left( #1 \right)\xspace}}
+%\newcommand*{\Icap}{\ensuremath{\opname{I}_{\cap} \xspace}}
+%\newcommand*{\Isyn}{\ensuremath{\opname{I}_{\mathcal{S}} \xspace}}
+%\newcommand*{\ind}{\ensuremath{\textnormal{ind}}}
+%\newcommand*{\opI}{\ensuremath{ \opname{I}\xspace}}
+
+%\textstyle{\sum}
+\newcommand*{\Probstar}[1]{ \ensuremath{ \textstyle{\Pr^*} \!\! \left( #1 \right)}}
+
+\newcommand*{\infostar}[2]{ \ensuremath{ \textstyle{\opI^*} \!\! \left( #1 \! : \! #2 \right)}}
+
+
+%\newcommand*{\Icup}{\ensuremath{\opname{I}_{\cup} \xspace}}
+
+\newcommand*{\IHo}{ \ensuremath{\opname{I}_{\textsc{Ho}}}\xspace}
+\newcommand*{\IHoe}[2]{ \IHo\left(#1 : #2 \right)}
+
+\newcommand*{\Ismp}{\ensuremath{\opname{I}_{\opname{smp} \xspace}}}
+
+
+\newcommand*{\Ialpha}{\ensuremath{\opname{I}_{\alpha} \xspace}}
+\newcommand*{\Ibeta}{\ensuremath{\opname{I}_{\beta} \xspace}}
+
+\newcommand*{\IalphaZ}{\ensuremath{\opname{I}_{\alpha}^0 \xspace}}
+\newcommand*{\IbetaZ}{\ensuremath{\opname{I}_{\beta}^0 \xspace}}
+
+
+\newcommand*{\Ialphae}[2]{\ensuremath{\opname{I}_{\alpha}\left( #1 : #2 \right)}}
+\newcommand*{\Ibetae}[2]{\ensuremath{\opname{I}_{\beta}\left( #1 : #2 \right) }}
+
+\newcommand*{\IalphaZe}[2]{\ensuremath{\opname{I}_{\alpha}^0\left( #1 : #2 \right)}}
+\newcommand*{\IbetaZe}[2]{\ensuremath{\opname{I}_{\beta}^0\left( #1 : #2 \right) }}
+
+\newcommand*{\chkm}{\checkmark}
+
