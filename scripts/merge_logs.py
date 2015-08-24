@@ -89,8 +89,6 @@ def process_log_files( input_filenames, output_filename ):
 
     global GZIP_MERGED_FILES
 
-# old style.  Remove everything before the ']:', else, before the first '{'
-    # if 
     output = open( output_filename, 'w', encoding='utf-8' )
 
     for filename in input_filenames:
@@ -100,6 +98,7 @@ def process_log_files( input_filenames, output_filename ):
             print("File: '%s' does not exist. Skipping." % filename, file=sys.stderr)
             continue
 
+        # old style.  Remove everything before the ']:', else, before the first '{'
         pattern = get_parsing_pattern( filename )
 
         with open(filename,'r', encoding='utf-8', errors='ignore') as f:
@@ -126,26 +125,29 @@ def process_log_files( input_filenames, output_filename ):
                 output.write( newline )
                 output.write('\n')
     
-        output.close()
+    output.close()
 
-        # If we're not Gzipping, then we're done
-        if not GZIP_MERGED_FILES:
-            return os.path.abspath( output_filename )
+    # If we're not Gzipping, then we're done
+    if not GZIP_MERGED_FILES:
+        return os.path.abspath( output_filename )
 
-        # if the file already exists, delete it.
-        if isfile( output_filename + '.gz' ):
-            os.remove( output_filename + '.gz' )
+    print( "Gzipping %s..." % output_filename )
 
-        # if we're GZIPPing, do that now.
-        with open( output_filename, 'rb' ) as src:
-            with gzip.open(output_filename + '.gz' , 'wb') as dst:
-                dst.writelines(src)
+    # if the file already exists, delete it.
+    if isfile( output_filename + '.gz' ):
+        os.remove( output_filename + '.gz' )
 
-        # remove the original unzipped version
-        os.remove( output_filename )
 
-        # return the gzipped filename
-        return os.path.abspath( output_filename + '.gz' ) 
+    # if we're GZIPPing, do that now.
+    with open( output_filename, 'rb' ) as src:
+        with gzip.open(output_filename + '.gz' , 'wb') as dst:
+            dst.writelines(src)
+
+    # remove the original unzipped version
+    os.remove( output_filename )
+
+    # return the gzipped filename
+    return os.path.abspath( output_filename + '.gz' ) 
                 
 
     
