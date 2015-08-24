@@ -1,7 +1,7 @@
 #!/usr/bin/env python3.3
 # -*- coding: utf-8 -*-
 
-import re, sys
+import re, sys, gzip
 from os import listdir
 from os.path import isfile
 from pprint import pprint
@@ -12,6 +12,7 @@ import os.path
 INCOMING_DIRECTORY  = 'incoming/'
 MERGED_DIRECTORY = 'merged/'
 MINIMUM_NUMBER_OF_LOGFILES = 10
+GZIP_MERGED_FILES = True
 ###########################################################################################
 
 PATTERN_SINGLEQUOTE_TO_DOUBLEQUOTE_JSON = re.compile(r"'([^']*)'(?=[:, ])")
@@ -86,8 +87,10 @@ def oldstyle2json(line):
 def process_log_files( input_filenames, output_filename ):
     '''returns the output filename'''
 
-# old style.  Remove everything before the ']:', else, before the first '{'
+    global GZIP_MERGED_FILES
 
+# old style.  Remove everything before the ']:', else, before the first '{'
+    # if 
     output = open( output_filename, 'w', encoding='utf-8' )
 
     for filename in input_filenames:
@@ -100,6 +103,8 @@ def process_log_files( input_filenames, output_filename ):
         pattern = get_parsing_pattern( filename )
 
         with open(filename,'r', encoding='utf-8', errors='ignore') as f:
+
+
 
             for line in f:
 
@@ -120,7 +125,15 @@ def process_log_files( input_filenames, output_filename ):
 
                 output.write( newline )
                 output.write('\n')
+    
+        # Gzip the file, if we're doing that.
+        if GZIP_MERGED_FILES:
+            with open( output_filename ) as src, gzip.open(output_filename + '.gz' , 'wb') as dst:
+                dst.writelines(src)
 
+            # remove the original unzipped version
+            os.remove( output_filename )
+                
 
     # finished with all of the files
     output.close()
