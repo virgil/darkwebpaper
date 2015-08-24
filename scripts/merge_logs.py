@@ -126,19 +126,29 @@ def process_log_files( input_filenames, output_filename ):
                 output.write( newline )
                 output.write('\n')
     
-        # Gzip the file, if we're doing that.
-        if GZIP_MERGED_FILES:
-            with open( output_filename ) as src, gzip.open(output_filename + '.gz' , 'wb') as dst:
+        output.close()
+
+        # If we're not Gzipping, then we're done
+        if not GZIP_MERGED_FILES:
+            return os.path.abspath( output_filename )
+
+        # if the file already exists, delete it.
+        if isfile( output_filename + '.gz' ):
+            os.remove( output_filename + '.gz' )
+
+        # if we're GZIPPing, do that now.
+        with open( output_filename, 'rb' ) as src:
+            with gzip.open(output_filename + '.gz' , 'wb') as dst:
                 dst.writelines(src)
 
-            # remove the original unzipped version
-            os.remove( output_filename )
+        # remove the original unzipped version
+        os.remove( output_filename )
+
+        # return the gzipped filename
+        return os.path.abspath( output_filename + '.gz' ) 
                 
 
-    # finished with all of the files
-    output.close()
-
-    return os.path.abspath( output_filename )
+    
 
 def fname2day(fname):
     '''returns the day of a log filename'''
