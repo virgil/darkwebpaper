@@ -140,8 +140,14 @@ def process_log_files( input_filenames, output_filename ):
 
     # if we're GZIPPing, do that now.
     with open( output_filename, 'rb' ) as src:
-        with gzip.open(output_filename + '.gz' , 'wb') as dst:
-            dst.writelines(src)
+        with gzip.open(output_filename + '.gz' , 'wb', compresslevel=6) as dst:
+
+            block = src.read(1 << 16)   # 64kB at a time
+
+            if block == '':
+                break
+
+            dst.write(block)
 
     # remove the original unzipped version
     os.remove( output_filename )
