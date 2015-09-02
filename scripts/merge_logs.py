@@ -9,10 +9,14 @@ from shutil import copyfileobj
 import os.path
 
 ###########################################################################################
-#INCOMING_DIRECTORY  = '2015-05m/'
-INCOMING_DIRECTORY  = 'incoming/'
-MERGED_DIRECTORY = 'merged/'
-MINIMUM_NUMBER_OF_LOGFILES = 10
+INCOMING_DIRECTORY  = '2015-09m/'
+MERGED_DIRECTORY = '2015-Sep/'
+MINIMUM_NUMBER_OF_LOGFILES = 14
+
+# Move the processed files to the done/ directory
+INCOMING_DIRECTORY_FINISHED = INCOMING_DIRECTORY + 'done/'
+
+# usually want this True
 GZIP_MERGED_FILES = True
 ###########################################################################################
 
@@ -188,6 +192,11 @@ if __name__ == '__main__':
 
     dicty = make_dict_of_dates_to_logs()
 
+    if not os.path.isdir( INCOMING_DIRECTORY ):
+        print("Error: Incoming directory '%s' does not exist." % INCOMING_DIRECTORY )
+        sys.exit(1)
+
+
     # remove any entries without enough entries from the dicty
     for date in sorted(dicty.keys()):
 
@@ -199,12 +208,25 @@ if __name__ == '__main__':
             del dicty[date]
             
 
+    # if the output directory doesn't exist, make it.
+    if dicty and not os.path.isdir( MERGED_DIRECTORY ):
+        print( "* Creating directory %s" % MERGED_DIRECTORY )
+        os.mkdir( MERGED_DIRECTORY )
+
+    # if the output directory doesn't exist, make it.
+    if dicty and not os.path.isdir( INCOMING_DIRECTORY_FINISHED ):
+        print( "* Creating directory %s" % INCOMING_DIRECTORY_FINISHED )
+        os.mkdir( INCOMING_DIRECTORY_FINISHED )
+
+
     for date in sorted(dicty):
 
         input_logfiles = dicty[date]
 
+
         ofilename = "%s/%s.log" % ( MERGED_DIRECTORY, date ) 
         abs_ofilename = os.path.abspath(ofilename)
+
 
         #print( "Doing %s..." % date)
         #print( "ofile=%s" % abs_ofilename )
@@ -213,5 +235,16 @@ if __name__ == '__main__':
         print( "- Merging %d file(s) \t -> %s" % (len(input_logfiles), abs_ofilename) )
         process_log_files( input_logfiles, abs_ofilename )
         
+        # prepare to move files...
+        srcs = [ x for x in input_logfiles if os.path.isfile(x) ]
+
+        print( "-- Moving %s log files -> %s" % ( len(srcs), INCOMING_DIRECTORY_FINISHED ) )
+        
+        for src in srcs:
+            dst_fname = os.split(src)[1]
+            dst = os.path.abspath(INCOMING_DIRECTORY_FINISHED + dst_fname)
+            os.rename( src, dst )
+
+
 
 
