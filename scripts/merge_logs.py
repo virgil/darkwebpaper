@@ -11,7 +11,7 @@ import os.path
 ###########################################################################################
 INCOMING_DIRECTORY  = '2015-09m/'
 MERGED_DIRECTORY = '2015-Sep/'
-MINIMUM_NUMBER_OF_LOGFILES = 14
+MINIMUM_NUMBER_OF_LOGFILES = 18
 
 # Move the processed files to the done/ directory
 INCOMING_DIRECTORY_FINISHED = INCOMING_DIRECTORY + 'done/'
@@ -108,13 +108,13 @@ def process_log_files( input_filenames, output_filename ):
 
         with open(filename,'r', encoding='utf-8', errors='ignore') as f:
 
-
-
             for line in f:
 
                 # remove everything before the first '::'.  Then remove any whitespace.
                 newline = re.sub(pattern, '', line, count=1).strip()
 
+                # these variations don't exist anymore.
+                '''
                 # if this is a JSON file with the single-quote problem, fix that now.
                 if "'time':" in newline:
                     newline = re.sub(PATTERN_SINGLEQUOTE_TO_DOUBLEQUOTE_JSON, r'"\1"', newline).strip()
@@ -126,9 +126,10 @@ def process_log_files( input_filenames, output_filename ):
                 # if this file has the "host": key in it, rewrite it to "h":
                 if '"host":' in newline:
                     newline = newline.replace('"host":','"h":', 1)
+                '''
 
                 output.write( newline )
-                output.write('\n')
+                output.write('\n')          # this is actually more efficient becuase we don't destory a string.
     
     output.close()
 
