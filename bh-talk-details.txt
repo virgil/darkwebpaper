@@ -1,0 +1,80 @@
+Title: Search and Analytics for the Dark Web
+
+Track: Forensics / Incident Response
+Track2: Defense
+
+Format: 25min briefing
+
+Abstract
+===============
+We introduce a proxy that allows Internet users, without ever installing Tor, to browse and search (via Google, etc) the Dark Web.  This proxy enables services such as Google Alerts for Dark Web brand mentions as well as the most powerful analytics ever possible on content of the Dark Web, who uses the Dark Web, and for what.  We then present the most comprehensive analytics yet of the Dark Web and those who browse it.
+
+Take aways
+===============
+* We made a conduit between the Dark Web (DW) and the world wide web.  Attendees can access the DW and even search it without installing Tor!  They can even use Google Alerts to track mentions on their brand on the DW.
+* We can now do analytics on the DW allowing to answer questions that were before impossible.
+* The DW (surprisingly?) follows the same scaling and traffic patterns as the world-wide-web.
+* The DW consists of a lot of forums and markets, which is also the most widely accessed content.
+* Less than 10% of Tor clients ever access childabuse content.  However, the users that do access childabuse content access A LOT of it, such that ~30% of all Tor traffic is related to childabuse.
+* With our conduit we can track requests childabuse content as well as Command-and-Control servers.
+
+Why Blackhat?
+========================
+* The Dark Web is a hot topic and on the corporate mind.  Despite this, collecting Dark Web analytics is exceedingly difficult, and beforehand required exploiting edge-cases in Tor's design which make drawing wider interpretation very difficult.
+
+* New DW research is usually about painful nitty-gritty technical details which require a graduate cryptography trainings to fully understand.  This work is appreciable even by non-specialists.
+
+* Outside the Tor community, most people don't know it's possible to search the DW---much less via Google.  We think of this as a public-service-announcement spreading this knowledge to the public.
+
+* We have pretty pictures, a free service to release, as well as a whitepaper.  And Blackhat attendees like all of these.
+
+* We want to increase the connections between the Tor and the Blackhat community.
+
+* We are based in Singapore!  Call it silly nationalism, but as Blackhat Asia is being held in Singapore we'd like to show the world the research being down by the home team.
+
+Outline
+========================
+(1) Very quickly, introduce the Dark Web (DW).  Attendees will know the basics, but it's important to convey the essential (cannot determine IP#) versus non-essential (hard to gather statistics) aspects.
+-- People often ask how big is the dark web compared to the regular web.  By pages, both are actually infinite, e.g., http://7g5v3hvx5x2zkoqe.onion.link/
+-- By #domains the Dark Web is ~20,000 domains, ergo vastly smaller than the regular internet.
+
+(2) Introduce Tor2web / OnionLink
+-- Explain how this is a conduit/proxy between the Dark Web <-> World-Wide-Web.
+-- Allows Google to search the DW (audience participation demo).
+-- Can even do Google Alerts for content on the DW (demo).
+
+(3) ...but the best part of OnionLink is that we can now do the WWW analytics we're used to on the Dark Web!
+
+(4) Plots and analytics
+
+-- Q: How different is the Dark Web?
+-- A: Fig 1a/b; slides 8/9.  We see the DW follows similar traffic patterns as the regular web.  (This also serves as a sanity check on our data).
+
+-- Q: What the top sites on the Dark Web?
+-- A: Fig 2; slide 10.  German escort market, wikis, forums, porn.
+
+-- Q: What countries use the DW the most?
+-- A: Fig 3; slide 11. US, Germany, Japan, France, Canada.  Also ~15% from Tor itself (not shown).  Tor users apparently enjoy our cacheing.
+
+-- Q: What do typical users use the DW for?
+-- A: Fig 4; slide 12.  Mostly forums and marketplaces.  Less than 10% of users view childabuse.
+
+-- Q: What does most of the requests/traffic go to?
+-- A: Fig 5a/b/c; slides 13/14/15.  We see that command and control makes up a lot of requests for such a small portion of users.  We also see that although the % requests for childabuse is in line with the % users viewing childabuse, <10%.  However that <10% of users use A LOT A TRAFFIC, such that almost THIRTY PERCENT of all Tor traffic is related to childabuse.
+
+(5) Closing thoughts on the DW
+-- Many of the same traffic patterns in the world-wide-web.
+-- Most people browse forums and markets.
+-- Command-and-Control servers are present, and we now can better study them.
+-- Small number of users (<10%) browse for childabuse, but they make up ~30% of all Tor traffic.
+-- childabuse is a major PR problem for Tor and the DW.  How to purge these sites and users is an open problem... but people are working on it.
+
+
+
+To Reviewers
+================
+* I could do a 25 or 50 minute briefing.  Your choice.
+
+* I can go into more detail very easily---e.g. what countries/ISPs access childabuse content?  What countries/ISPs are the most owned by botnets?  These can be answered and plotted on pretty graphs.  I chose these plots because they are the results least likely to change, but if given 50 minutes I can certainly include more at the reviewers' discretion.
+
+* We are NUS academics, writing papers is what we do.  And as such we will have a nice whitepaper available by February 1st at the latest.
