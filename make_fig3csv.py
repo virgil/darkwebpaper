@@ -55,7 +55,7 @@ print("\n Done!")
 
 z = [ [cn,reqs[cn],traffics[cn]] for cn in reqs.keys() ]
     
-with open("fig2.csv", "w") as f:
+with open("fig3.csv", "w") as f:
     writer = csv.writer(f)
     writer.writerows(z)
 

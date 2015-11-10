@@ -1,6 +1,6 @@
 #!/usr/local/bin/python3.3
 '''
-In this script we take a bunch of .log.jsons and merge them into a single .json
+In this script we take a bunch of .log.json's and merge them into a single .log.json
 '''
 
 import json, codecs, sys, os.path, copy
@@ -43,9 +43,9 @@ for domain, values in y.items():
 
 
 
-with open("out.json", "w") as f:
+with open("out.log.json", "w") as f:
     json.dump(z, f, indent=True)
-    print( "Wrote %d domains to out.json" % ( len(z) ) )
+    print( "Wrote %d domains to out.log.json" % ( len(z) ) )
 
 print("\n Done!")
 
