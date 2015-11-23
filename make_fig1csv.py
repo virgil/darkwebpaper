@@ -6,7 +6,20 @@ from pprint import pprint
 import pycountry
 
 #FILENAMES = ['logs/2015-04-01.log','logs/2015-05-01.log','logs/2015-06-01.log','logs/2015-07-01.log','logs/2015-08-01.log','2015-09-01.log','logs/2015-10-01.log','logs/2015-10-02.log', 'logs/2015-10-03.log', 'logs/2015-10-05.log', 'logs/2015-10-06.log']
-FILENAMES = ['logs/2015-09-01.log.short']
+FILENAMES = ['/g/darkwebpaper/logs/usb/2015-10-02.log',
+'/g/darkwebpaper/logs/usb/2015-10-03.log',
+'/g/darkwebpaper/logs/usb/2015-10-06.log',
+'/g/darkwebpaper/logs/usb/2015-10-08.log',
+'/g/darkwebpaper/logs/usb/2015-10-10.log',
+'/g/darkwebpaper/logs/usb/2015-10-12.log',
+'/g/darkwebpaper/logs/usb/2015-10-16.log',
+'/g/darkwebpaper/logs/usb/2015-10-18.log',
+'/g/darkwebpaper/logs/usb/2015-10-20.log',
+'/g/darkwebpaper/logs/usb/2015-10-22.log',
+'/g/darkwebpaper/logs/usb/2015-10-24.log',
+'/g/darkwebpaper/logs/usb/2015-10-26.log',
+'/g/darkwebpaper/logs/usb/2015-10-28.log',
+'/g/darkwebpaper/logs/usb/2015-10-30.log']
 
 #help
 

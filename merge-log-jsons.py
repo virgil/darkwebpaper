@@ -10,7 +10,7 @@ from pprint import pprint
 
 
 # 1. take in .log.json files from the command line
-FILENAMES = [ x for x in sys.argv[1:] if os.path.isfile(x) and x.endswith('.log.json') ]
+FILENAMES = [ x for x in sys.argv[1:] if os.path.isfile(x) and x.endswith('.json') ]
 print( "FILENAMES=%s" % FILENAMES )
 
 y = {}
